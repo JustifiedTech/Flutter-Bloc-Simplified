@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/models/transaction_model.dart';
 
 import '../user_interface/all_transactions.dart';
 import '../user_interface/error.dart';
@@ -12,8 +13,12 @@ class AppRoute {
       case allTransactions:
         return MaterialPageRoute(builder: (context) => const AllTransactions());
       case transactionDetail:
+        final data = settings.arguments as ClientTransactions;
+
         return MaterialPageRoute(
-            builder: (context) => const TransactionDetails());
+            builder: (context) => TransactionDetails(
+                  transactionData: data,
+                ));
       default:
         return MaterialPageRoute(builder: (context) => const ErrorPage());
     }

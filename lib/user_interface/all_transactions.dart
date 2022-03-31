@@ -76,7 +76,8 @@ class _AllTransactionsState extends State<AllTransactions> {
                                     child: ListTile(
                                       onTap: () => Navigator.of(context)
                                           .pushNamed(
-                                              AppRoute.transactionDetail),
+                                              AppRoute.transactionDetail,
+                                              arguments: transa),
                                       leading: CircleAvatar(
                                           backgroundColor:
                                               (transa?.type ?? '') != 'DEPOSIT'
