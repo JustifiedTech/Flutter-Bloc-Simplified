@@ -25,6 +25,13 @@ class TransactionRepository {
       throw Exception("Failed to load transaction");
     }
   }
+
+  Future<TransactionModel> readJson() async {
+    final String response =
+        await rootBundle.loadString('assets/json/result.json');
+    final result = transactionModelFromJson(response);
+    return result;
+  }
 }
 
 Future<TransactionModel> readJson() async {

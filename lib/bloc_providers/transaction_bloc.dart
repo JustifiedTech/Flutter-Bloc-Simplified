@@ -16,7 +16,7 @@ class TransactionBloc extends Bloc<TransactionEvent, TransactionState> {
     on<LoadTransactionEvent>((event, emit) async {
       emit(TransactionLoadingState());
       try {
-        final transaction = await _transactionRepository.getTransaction();
+        final transaction = await _transactionRepository.readJson();
         emit(TransactionLoadedState(transaction));
       } catch (e) {
         emit(TransactionErrorState(e.toString()));

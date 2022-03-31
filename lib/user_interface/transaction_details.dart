@@ -6,9 +6,8 @@ import '../models/transaction_model.dart';
 import '../utils/date_formatter.dart';
 
 class TransactionDetails extends StatelessWidget {
-  const TransactionDetails({
-    Key? key, required this.transactionData
-  }) : super(key: key);
+  const TransactionDetails({Key? key, required this.transactionData})
+      : super(key: key);
   final ClientTransactions transactionData;
 
   @override
@@ -45,12 +44,13 @@ class TransactionDetails extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
-                height: getProportionateScreenHeight(349),
+                height: getProportionateScreenHeight(369),
                 width: getProportionateScreenWidth(334),
                 padding: EdgeInsets.only(
-                    top: getProportionateScreenHeight(36),
-                    left: getProportionateScreenWidth(16),
-                    right: getProportionateScreenWidth(21)),
+                  top: getProportionateScreenHeight(36),
+                  left: getProportionateScreenWidth(16),
+                  right: getProportionateScreenWidth(21),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +69,8 @@ class TransactionDetails extends StatelessWidget {
                         'Transaction date',
                         DateFormatter.parseToDay(
                             transactionData.entryDate ?? '')),
-                    row('Comment', '${transactionData.comment}'),
+                    // row('Comment',
+                    //     '${transactionData.comment?.split(":").last}'),
                     row('Balance', transactionData.balance.toString()),
                   ],
                 ),
@@ -95,11 +96,3 @@ class TransactionDetails extends StatelessWidget {
     );
   }
 }
-
-//  "transactionId": 148811,
-//                 "type": "TRANSFER",
-//                 "amount": -2000.0,
-//                 "comment": "Transfer: 2K from 3580016662",
-//                 "entryDate": "2022-03-09T09:26:19+0000",
-//                 "currencyCode": "NGN",
-//                 "balance": "8000"
