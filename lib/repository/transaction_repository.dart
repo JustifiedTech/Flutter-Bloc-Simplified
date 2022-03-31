@@ -31,6 +31,5 @@ Future<TransactionModel> readJson() async {
   final String response =
       await rootBundle.loadString('assets/json/result.json');
   final result = transactionModelFromJson(response);
-  log(result.message.toString());
   return result;
 }

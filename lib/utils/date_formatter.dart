@@ -12,14 +12,14 @@ class DateFormatter {
   }
 
 
-  static DateTime parseToDateTime(String dateTime) {
-    return DateTime.parse(dateTime);
+  static DateTime? parseToDateTime(String dateTime) {
+    return DateTime.tryParse(dateTime);
   }
 
 
   static String parseToDay(String dateTime) {
     var result = parseToDateTime(dateTime);
-    return toDay(result);
+    return toDay(result!);
   }
 
 }

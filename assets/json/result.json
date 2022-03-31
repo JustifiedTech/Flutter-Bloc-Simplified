@@ -2,7 +2,7 @@
 	"status": "Successful",
 	"code": "MwI00",
 	"message": "Successful",
-	"data": {
+	"result": {
 		"clientTransactions": [
 			{
 				"transactionId": 148818,

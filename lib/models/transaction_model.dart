@@ -7,28 +7,28 @@ String transactionModelToJson(TransactionModel data) =>
     json.encode(data.toJson());
 
 class TransactionModel {
-  String? code;
-  Data? data;
-  String? message;
   String? status;
+  String? code;
+  String? message;
+  Data? data;
 
-  TransactionModel({this.code, this.data, this.message, this.status});
+  TransactionModel({this.status, this.code, this.message, this.data});
 
   TransactionModel.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    message = json['message'];
     status = json['status'];
+    code = json['code'];
+    message = json['message'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
     data['code'] = code;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = message;
-    data['status'] = status;
     return data;
   }
 }
@@ -58,42 +58,42 @@ class Data {
 }
 
 class ClientTransactions {
-  double? amount;
-  String? balance;
-  String? comment;
-  String? currencyCode;
-  String? entryDate;
   int? transactionId;
   String? type;
+  double? amount;
+  String? comment;
+  String? entryDate;
+  String? currencyCode;
+  String? balance;
 
   ClientTransactions(
-      {this.amount,
-      this.balance,
+      {this.transactionId,
+      this.type,
+      this.amount,
       this.comment,
-      this.currencyCode,
       this.entryDate,
-      this.transactionId,
-      this.type});
+      this.currencyCode,
+      this.balance});
 
   ClientTransactions.fromJson(Map<String, dynamic> json) {
-    amount = json['amount'];
-    balance = json['balance'];
-    comment = json['comment'];
-    currencyCode = json['currencyCode'];
-    entryDate = json['entryDate'];
     transactionId = json['transactionId'];
     type = json['type'];
+    amount = json['amount'];
+    comment = json['comment'];
+    entryDate = json['entryDate'];
+    currencyCode = json['currencyCode'];
+    balance = json['balance'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['amount'] = amount;
-    data['balance'] = balance;
-    data['comment'] = comment;
-    data['currencyCode'] = currencyCode;
-    data['entryDate'] = entryDate;
     data['transactionId'] = transactionId;
     data['type'] = type;
+    data['amount'] = amount;
+    data['comment'] = comment;
+    data['entryDate'] = entryDate;
+    data['currencyCode'] = currencyCode;
+    data['balance'] = balance;
     return data;
   }
 }

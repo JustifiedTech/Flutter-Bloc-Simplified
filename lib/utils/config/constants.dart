@@ -11,6 +11,8 @@ const kGrey = Color(0xFF707070);
 const kList = Color(0xFFFAF9FF);
 const kRed = Color(0xFFE47673);
 const kPurpleA = Color.fromARGB(10, 119, 101, 196);
+const kGreenA = Color.fromARGB(10, 101, 173, 196);
+
 
 TextStyle textStyle(double size,
     {Color color = kBlack, fontWeight = FontWeight.w400}) {

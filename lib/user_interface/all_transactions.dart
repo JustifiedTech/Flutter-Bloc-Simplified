@@ -6,6 +6,7 @@ import 'package:new_app/utils/date_formatter.dart';
 import 'package:new_app/utils/routes.dart';
 
 import '../bloc_providers/transaction_bloc.dart';
+import '../models/transaction_model.dart';
 import '../repository/transaction_repository.dart';
 import '../utils/config/size_config.dart';
 
@@ -50,67 +51,89 @@ class _AllTransactionsState extends State<AllTransactions> {
                   height: getProportionateScreenWidth(23),
                 ),
                 Expanded(
-                  child: FutureBuilder(
+                  child: FutureBuilder<TransactionModel>(
                       future: readJson(),
                       builder: (context, snapshot) {
-                        var transaction = snapshot.data;
                         if (snapshot.hasData) {
+                          TransactionModel transaction = snapshot.requireData;
                           return ListView.builder(
+                              itemCount:
+                                  transaction.data!.clientTransactions?.length,
                               itemBuilder: (context, index) {
-                            return Container(
-                              height: getProportionateScreenHeight(69),
-                              width: getProportionateScreenWidth(330),
-                              margin: EdgeInsets.only(
-                                  bottom: getProportionateScreenHeight(10)),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: kList,
-                              ),
-                              child: Center(
-                                child: ListTile(
-                                  onTap: () => Navigator.of(context)
-                                      .pushNamed(AppRoute.transactionDetail),
-                                  leading: CircleAvatar(
-                                    backgroundColor: kPurpleA,
-                                    child: DefaultSvgIcon(
-                                      icon: 'assets/svg/phone-with-arrow.svg',
-                                      color: kRed,
+                                var transa = transaction
+                                    .data!.clientTransactions?[index];
+
+                                return Container(
+                                  height: getProportionateScreenHeight(69),
+                                  width: getProportionateScreenWidth(330),
+                                  margin: EdgeInsets.only(
+                                      bottom: getProportionateScreenHeight(10)),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: kList,
+                                  ),
+                                  child: Center(
+                                    child: ListTile(
+                                      onTap: () => Navigator.of(context)
+                                          .pushNamed(
+                                              AppRoute.transactionDetail),
+                                      leading: CircleAvatar(
+                                          backgroundColor:
+                                              (transa?.type ?? '') != 'DEPOSIT'
+                                                  ? kPurpleA
+                                                  : kGreenA,
+                                          child:
+                                              (transa?.type ?? '') != 'DEPOSIT'
+                                                  ? Icon(
+                                                      Icons.arrow_upward,
+                                                      color: kPurple,
+                                                    )
+                                                  : Icon(Icons.arrow_downward,
+                                                      color: kGreen)),
+                                      title: Text.rich(TextSpan(
+                                          text: transa?.type,
+                                          style: TextStyle(
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      13),
+                                              fontWeight: FontWeight.bold),
+                                          children: [
+                                            TextSpan(
+                                                text: '',
+                                                style: TextStyle(
+                                                  color: kPurple,
+                                                ))
+                                          ])),
+                                      subtitle: Text(
+                                          DateFormatter.parseToDay(
+                                              transa?.entryDate ?? ""),
+                                          style: TextStyle(
+                                              fontSize:
+                                                  getProportionateScreenWidth(
+                                                      11),
+                                              color: kGrey)),
+                                      trailing: Text(
+                                        '${transa?.amount}'.startsWith('-')
+                                            ? '--₦${transa?.amount.toString().substring(1)}'
+                                                .substring(1)
+                                            : '₦${transa?.amount}',
+                                        style: TextStyle(
+                                            fontSize:
+                                                getProportionateScreenWidth(14),
+                                            color: (transa?.amount ?? '')
+                                                    .toString()
+                                                    .startsWith('-')
+                                                ? kRed
+                                                : kGreen,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
-                                  title: Text.rich(TextSpan(
-                                      text: 'Money received from ',
-                                      style: TextStyle(
-                                          fontSize:
-                                              getProportionateScreenWidth(13),
-                                          fontWeight: FontWeight.bold),
-                                      children: [
-                                        TextSpan(
-                                            text: 'Michael',
-                                            style: TextStyle(
-                                              color: kPurple,
-                                            ))
-                                      ])),
-                                  subtitle: Text(
-                                      DateFormatter.parseToDay(
-                                          '2022-03-09T09:29:09+0000'),
-                                      style: TextStyle(
-                                          fontSize:
-                                              getProportionateScreenWidth(11),
-                                          color: kGrey)),
-                                  trailing: Text(
-                                    '₦ 50,000',
-                                    style: TextStyle(
-                                        fontSize:
-                                            getProportionateScreenWidth(14),
-                                        color: kGreen,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            );
-                          });
+                                );
+                              });
                         } else {
-                          return CircularProgressIndicator.adaptive();
+                          return const Center(
+                              child: CircularProgressIndicator.adaptive());
                         }
                       }),
                 ),
