@@ -1,4 +1,4 @@
-# new_app
+# Flutter-Bloc-Simplified
 
 A new Flutter project.
 
