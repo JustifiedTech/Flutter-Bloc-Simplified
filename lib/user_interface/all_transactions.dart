@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/user_interface/default_svg_icon.dart';
 import 'package:new_app/utils/config/constants.dart';
 import 'package:new_app/utils/date_formatter.dart';
 import 'package:new_app/utils/routes.dart';
@@ -20,7 +19,7 @@ class AllTransactions extends StatefulWidget {
 class _AllTransactionsState extends State<AllTransactions> {
   @override
   void initState() {
-    readJson();
+    // readJson();
     // BlocProvider.of<JokeBloc>(context).add(LoadJokeEvent());
     super.initState();
   }
@@ -30,7 +29,7 @@ class _AllTransactionsState extends State<AllTransactions> {
     SizeConfig().init(context);
     return BlocProvider(
       create: (context) => TransactionBloc(
-        RepositoryProvider.of<TransactionRepository>(context),
+        transactionRepository:RepositoryProvider.of<TransactionRepository>(context),
       )..add(LoadTransactionEvent()),
       child: Scaffold(
         body: SafeArea(
@@ -57,12 +56,17 @@ class _AllTransactionsState extends State<AllTransactions> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           TransactionModel transaction = snapshot.requireData;
+                          debugPrint(transaction
+                              .data?.clientTransactions?.length
+                              .toString());
+                          // debugPrint(snapshot.hasData.toString());
+
                           return ListView.builder(
                               itemCount:
-                                  transaction.data!.clientTransactions?.length,
+                                  transaction.data?.clientTransactions?.length,
                               itemBuilder: (context, index) {
                                 var transa = transaction
-                                    .data!.clientTransactions?[index];
+                                    .data?.clientTransactions?[index];
 
                                 return Container(
                                   height: getProportionateScreenHeight(69),
@@ -85,11 +89,11 @@ class _AllTransactionsState extends State<AllTransactions> {
                                                   : kGreenA,
                                           child:
                                               (transa?.type ?? '') != 'DEPOSIT'
-                                                  ? Icon(
+                                              ? const Icon(
                                                       Icons.arrow_upward,
                                                       color: kPurple,
                                                     )
-                                                  : Icon(Icons.arrow_downward,
+                                              : const Icon(Icons.arrow_downward,
                                                       color: kGreen)),
                                       title: Text.rich(TextSpan(
                                           text: transa?.type,
@@ -98,7 +102,7 @@ class _AllTransactionsState extends State<AllTransactions> {
                                                   getProportionateScreenWidth(
                                                       13),
                                               fontWeight: FontWeight.bold),
-                                          children: [
+                                          children: const [
                                             TextSpan(
                                                 text: '',
                                                 style: TextStyle(
