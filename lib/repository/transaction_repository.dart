@@ -7,15 +7,14 @@ import '../models/transaction_model.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionRepository {
-  final String _baseUrl =
-      "https://api-sandbox.renmoney.com/deposit-transfer/api/v3/investment/3580016662/transactions";
+  final String _baseUrl = '';
 
   Future<TransactionModel> getTransaction() async {
     final response = await http.get(Uri.parse(_baseUrl), headers: {
-      'Accept': 'application/json',
-      "sourceappid": "ckpu7zo0p0000gg5436coo7xs",
+      'Accept': 'application/json; charset=utf-8',
+   
       HttpHeaders.authorizationHeader:
-          "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyMzQ4OTkzOTQ5NjMzIiwiaWF0IjoxNjQ4NjU0OTI1LCJleHAiOjE2NDg3NDEzMjV9.o3VXlAKnHmt_DLv2gQZ9GsLhSsCSIDlOcepGtmG07omgtNXROz8tKY7eyYIv3LH0U0DGBTPLxVS_OAuL_UZ5Nw"
+          "Bearer "
     });
     if (response.statusCode == 200) {
       final result = transactionModelFromJson(response.body);
